@@ -28,8 +28,8 @@ jobs:
 
       - name: Run Postman tests
         run: |
-          newman run myCollection.json \
-                 -e myEnvironment.json \
+          newman run MyCollection.json \
+                 -e MyEnvironment.json \
                  --reporters cli,junit \
                  --reporter-junit-export results.xml
 
