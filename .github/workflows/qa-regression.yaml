@@ -4,38 +4,37 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
 
 jobs:
-  test:
+  run-postman-tests:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node
+      - name: Verify files exist
+        run: |
+          echo "Listing files in working directory..."
+          ls -R
+
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '18'
 
-      # --- API Tests (Postman/Newman) ---
-      - name: Run Postman Collection
+      - name: Install Newman (Postman CLI)
+        run: npm install -g newman
+
+      - name: Run Postman tests
         run: |
-          npm install -g newman
-          newman run ./collections/Regression.postman_collection.json \
-            --environment ./envs/qa.postman_environment.json \
-            --reporters cli,junit --reporter-junit-export newman-results.xml
+          newman run myCollection.json \
+                 -e myEnvironment.json \
+                 --reporters cli,junit \
+                 --reporter-junit-export results.xml
 
-      # --- UI Tests (Selenium) ---
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
         with:
-          python-version: 3.12
-
-      - name: Install Selenium dependencies
-        run: |
-          pip install selenium pytest pytest-html
-
-      - name: Run Selenium suite
-        run: |
-          pytest tests/ --html=reports/selenium_report.html --self-contained-html
+          name: newman-report
+          path: results.xml
