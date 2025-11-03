@@ -8,6 +8,9 @@ Personal repository for Postman API testing examples, learning exercises, and wo
 - Basic test scripts  
 - Collections for regression or smoke testing  
 - Advanced Postman Test Learning Documentation
+- This repositry demonstrates CI Setup for Postman API Collections using GitHub Actions
+- Environment and collection files are placeholder templates to show pipeline execution
+- Can intergrate with live endpoints for regression, smoke or contract testing
 
 ## 🧰 Tools & Setup
 - **Tool:** Postman  
