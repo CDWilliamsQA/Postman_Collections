@@ -10,31 +10,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout your repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Quick file sanity check (optional but good to keep)
       - name: Verify files exist
         run: |
           echo "Listing files in working directory..."
           ls -R
 
+      # Step 3: Install Node.js
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
+      # Step 4: Install Newman (Postman CLI)
       - name: Install Newman (Postman CLI)
         run: npm install -g newman
 
+      # Step 5: Run your Postman collection with environment
       - name: Run Postman tests
         run: |
-          newman run MyCollection.json \
-                 -e MyEnvironment.json \
-                 --reporters cli,junit \
-                 --reporter-junit-export results.xml
+          newman run "collections/Postman Library API v2.postman_collection.json" \
+            -e "environments/qa.postman_environment.json" \
+            --reporters cli,json \
+            --reporter-json-export "reports/newman_json_reports/results.json"
 
+      # Step 6: Upload test report artifact
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
-          name: newman-report
-          path: results.xml
+          name: newman-json-report
+          path: reports/newman_json_reports/results.json
