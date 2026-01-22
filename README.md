@@ -1,6 +1,12 @@
 # 🧩 Postman Collections
 
 Personal repository for Postman API testing examples, learning exercises, and workflow demonstrations.
+###Notes on Current Test Results
+This Pipeline connects to the Postman Library API Collection.
+Due to recent API updates and environment drift within Postman, several test cases currently fail with "invalid URI" or header missmatch errors.
+
+These are not ***pipeline issues*** - the GitHub Actions workflow executes successfully end to end, demonstrating a functioning CI/CD regression runner.
+Environment and endpoint variables will be synchronized in a future update.
 
 ## 📚 Contents
 - Example API requests  
