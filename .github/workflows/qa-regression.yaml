@@ -33,7 +33,7 @@ jobs:
       # Step 5: Run your Postman collection with environment
       - name: Run Postman tests
         run: |
-          newman run "collections/Postman Library API v2.postman_collection.json" \
+          newman run "collections/Postman Libray API v2.postman_collection.json" \
             -e "environments/qa.postman_environment.json" \
             --reporters cli,json \
             --reporter-json-export "reports/newman_json_reports/results.json"
